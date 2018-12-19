@@ -1,0 +1,14 @@
+
+.idea
+!.gitkeep
+
+# symfony/framework-bundle
+/.env.local
+/.env.*.local
+/public/bundles/
+var/*
+!var/.gitkeep
+
+# Managed by composer
+vendor/*
+!vendor/.gitkeep
