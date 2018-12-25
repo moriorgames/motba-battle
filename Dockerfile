@@ -1,22 +1,42 @@
 # Build command:
 # docker build -t moriorgames/motba-battle .
 # Run command:
-# docker run -td --name motba_battle moriorgames/motba-battle
-FROM        php:7.3.0-cli-stretch
+# docker run -td --name motba_battle -p 80:80 moriorgames/motba-battle
+FROM        moriorgames/php72-base
 MAINTAINER  MoriorGames "moriorgames@gmail.com"
 
-# Update and install basic dependencies
-RUN         apt-get update && apt-get install -y git vim zip unzip
+# Install some packages to create http server
+RUN         apt-get update --fix-missing && apt-get install -y \
+            zip \
+            unzip \
+            git \
+            curl \
+            apache2
+RUN         echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# config to enable .htaccess
+ADD         docker/vhost_default.conf /etc/apache2/sites-available/000-default.conf
+RUN         a2enmod rewrite
 
 # Create Application directory
-RUN         mkdir -p /app
+RUN         mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
 COPY        . /app
 WORKDIR     /app
+RUN         chown www-data:www-data /app -R
 
 # Composer variables
 ENV         COMPOSER_HOME /app
 
 # Build project
 RUN         php /app/phars/composer.phar install --optimize-autoloader
+RUN         chmod 755 -R var
+RUN         chmod 755 -R public
 
-CMD         ["php", "bin/console", "app:move-hero", "aaa-bbb-4cc-ddd", "2", "3"]
+# Expose ports
+EXPOSE      80
+
+# Add run scripts
+ADD         docker/run.sh /run.sh
+RUN         chmod 755 /*.sh
+
+ENTRYPOINT  ["/run.sh"]
