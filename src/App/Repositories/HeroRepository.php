@@ -8,5 +8,5 @@ interface HeroRepository
 {
     public function findByUuid(string $uuid): Hero;
 
-    public function persist(Hero $hero): void;
+    public function persist(Hero $hero): bool;
 }

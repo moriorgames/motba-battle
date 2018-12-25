@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+    battle:
+        image: moriorgames/motba-battle
+        container_name: motba_battle
+        ports:
+        - "80:80"
+        volumes:
+        - .:/var/www/html
+        links:
+        - redis:redis
+
+    redis:
+        image: redis
+        container_name: motba_redis
+        ports:
+        - "6379:6379"

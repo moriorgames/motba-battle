@@ -38,12 +38,9 @@ class MoveHeroCliCommand extends Command
             $input->getArgument(self::ARGUMENT_Y)
         );
 
-        while (true) {
-            $result = $handler->handle($command);
+        $result = $handler->handle($command);
 
-            $format = 'Hero <info>%s</info> moved to X: <info>%d</info> Y: <info>%d</info>';
-            $output->writeln(sprintf($format, $result->uuid(), $result->x(), $result->y()));
-            sleep(1);
-        }
+        $format = 'Hero <info>%s</info> moved to X: <info>%d</info> Y: <info>%d</info>';
+        $output->writeln(sprintf($format, $result->uuid(), $result->x(), $result->y()));
     }
 }

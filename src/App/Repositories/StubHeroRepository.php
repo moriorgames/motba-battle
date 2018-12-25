@@ -12,8 +12,8 @@ class StubHeroRepository implements HeroRepository
         return Hero::fromStorage($uuid, 'a', 1, 2, 3, Archetype::CARRY_MELEE(), 0, 0);
     }
 
-    public function persist(Hero $hero): void
+    public function persist(Hero $hero): bool
     {
-        $hero->setX($hero->getX());
+        return true;
     }
 }
