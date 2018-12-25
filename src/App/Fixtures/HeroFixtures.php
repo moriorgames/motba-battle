@@ -13,6 +13,8 @@ class HeroFixtures
             'damage'    => 2,
             'hitPoints' => 5,
             'archetype' => Archetype::CARRY_MELEE,
+            'x'         => 0,
+            'y'         => 0,
         ],
     ];
 }
