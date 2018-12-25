@@ -2,40 +2,26 @@
 
 namespace App\Entities;
 
-use App\Enum\Archetype;
 use Ramsey\Uuid\Uuid;
 
-class Hero extends HeroBase
+class HeroMove extends HeroTransactionBase
 {
     public const DOMAIN = 'model';
 
     private $uuid;
-    private $name;
-    private $speed;
-    private $damage;
-    private $hitPoints;
-    private $archetype;
     private $x;
     private $y;
 
-    public function __construct(
-        string $name, int $speed, int $damage, int $hitPoints, Archetype $archetype, int $x, int $y
-    )
+    public function __construct(int $x, int $y)
     {
-        $this->name = $name;
-        $this->speed = $speed;
-        $this->damage = $damage;
-        $this->hitPoints = $hitPoints;
-        $this->archetype = $archetype;
+        $this->uuid = Uuid::uuid4()->toString();
         $this->x = $x;
         $this->y = $y;
     }
 
-    public static function fromStorage(
-        string $uuid, string $name, int $speed, int $damage, int $hitPoints, Archetype $archetype, int $x, int $y
-    ): self
+    public static function fromStorage(string $uuid, int $x, int $y): self
     {
-        $hero = new static($name, $speed, $damage, $hitPoints, $archetype, $x, $y);
+        $hero = new static($x, $y);
         $hero->setUuid($uuid);
         $hero->setChildDomain();
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Entities\Hero;
+use App\Enum\Archetype;
 use App\Handlers\MoveHeroInput;
 use App\Handlers\MoveHeroHandler;
 use App\Repositories\HeroRepository;
@@ -26,7 +27,7 @@ class MoveHeroHandlerTest extends TestCase
 
     public function test_it_should_be_able_to_move_hero_when_command_enters_and_persist_on_storage()
     {
-        $hero = Hero::fromStorage($this->heroUuid, 0, 0);
+        $hero = Hero::fromStorage($this->heroUuid, 'a', 1, 2, 3, Archetype::CARRY_MELEE(), 0, 0);
         $this->heroRepository->findByUuid(Argument::exact($this->heroUuid))->willReturn($hero);
         $this->heroRepository->persist(Argument::type(Hero::class));
         $x = 2;
