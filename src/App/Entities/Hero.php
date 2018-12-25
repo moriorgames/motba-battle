@@ -22,6 +22,7 @@ class Hero extends HeroBase
         string $name, int $speed, int $damage, int $hitPoints, Archetype $archetype, int $x, int $y
     )
     {
+        $this->uuid = Uuid::uuid4()->toString();
         $this->name = $name;
         $this->speed = $speed;
         $this->damage = $damage;
@@ -36,7 +37,7 @@ class Hero extends HeroBase
     ): self
     {
         $hero = new static($name, $speed, $damage, $hitPoints, $archetype, $x, $y);
-        $hero->setUuid($uuid);
+        $hero->uuid = $uuid;
         $hero->setChildDomain();
 
         return $hero;
@@ -47,9 +48,29 @@ class Hero extends HeroBase
         return $this->uuid;
     }
 
-    private function setUuid(string $uuid)
+    public function getName(): string
     {
-        $this->uuid = $uuid;
+        return $this->name;
+    }
+
+    public function getSpeed(): int
+    {
+        return $this->speed;
+    }
+
+    public function getDamage(): int
+    {
+        return $this->damage;
+    }
+
+    public function getHitPoints(): int
+    {
+        return $this->hitPoints;
+    }
+
+    public function getArchetype(): Archetype
+    {
+        return $this->archetype;
     }
 
     public function getX(): int
